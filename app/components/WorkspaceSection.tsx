@@ -14,14 +14,12 @@ export default function WorkspaceSection() {
     setLoading(true);
     setResult("");
 
-    // Trigger your AI agent system
     window.dispatchEvent(
       new CustomEvent("webcodo-agent", {
         detail: { action: "prompt", payload: input, language },
       })
     );
 
-    // Temporary UI delay
     setTimeout(() => {
       setLoading(false);
       setResult(`AI executed in ${language} language.`);
@@ -29,8 +27,13 @@ export default function WorkspaceSection() {
   };
 
   return (
-    <section className="py-20 flex flex-col items-center">
-      <h2 className="text-4xl font-bold mb-10 text-center">Workspace</h2>
+    <section className="py-20 flex flex-col items-center w-full">
+      {/* Header */}
+      <div className="w-full max-w-5xl mb-8">
+        <h2 className="text-3xl font-bold tracking-tight text-left">
+          Prompt Workspace
+        </h2>
+      </div>
 
       {/* Workspace Container */}
       <div
@@ -43,7 +46,7 @@ export default function WorkspaceSection() {
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask WebCodo AI anything…"
+          placeholder="Write your prompt here…"
           className="
             w-full h-48 bg-slate-800 text-slate-200
             border border-sky-700 rounded-xl p-4
@@ -54,7 +57,6 @@ export default function WorkspaceSection() {
 
         {/* Controls */}
         <div className="flex justify-end items-center gap-3 mt-4">
-
           {/* Language Selector */}
           <select
             value={language}
