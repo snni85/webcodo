@@ -1,7 +1,6 @@
 "use client";
 import WorkspacePanel from "@/components/workspace/WorkspacePanel";
 
-export default function HomePage() {
+export default function WorkspacePage() {
   return <WorkspacePanel />;
 }
-

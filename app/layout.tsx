@@ -1,14 +1,12 @@
-import Sidebar from "@/components/Sidebar";
 import "./globals.css";
+import Sidebar from "@/components/layout/Sidebar";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white flex min-h-screen">
+      <body className="flex bg-slate-950 text-slate-200">
         <Sidebar />
-        <main className="flex-1 p-10 overflow-auto">
-          {children}
-        </main>
+        <main className="flex-1 p-6">{children}</main>
       </body>
     </html>
   );

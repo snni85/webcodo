@@ -15,7 +15,7 @@ import {
   RefreshCw,
   SunMoon,
   Cpu,
-  FolderKanban,
+  LayoutDashboard,
   Cog,
 } from "lucide-react";
 
@@ -26,7 +26,7 @@ export default function CommandPalette({ open, setOpen }: any) {
 
   const tabs = [
     { name: "AI", icon: Cpu },
-    { name: "Workspace", icon: FolderKanban },
+    { name: "Workspace", icon: LayoutDashboard },
     { name: "System", icon: Cog },
   ];
 
@@ -55,12 +55,10 @@ export default function CommandPalette({ open, setOpen }: any) {
     cmd.name.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Reset selection when query or tab changes
   useEffect(() => {
     setSelectedIndex(0);
   }, [query, activeTab]);
 
-  // Keyboard navigation
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
       if (!open) return;
@@ -111,7 +109,7 @@ export default function CommandPalette({ open, setOpen }: any) {
         "
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Tabs with Icons */}
+        {/* Tabs */}
         <div className="flex gap-3 mb-4">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -135,7 +133,7 @@ export default function CommandPalette({ open, setOpen }: any) {
                   size={16}
                   className={`
                     text-cyan-300 transition-transform duration-200
-                    ${isActive ? "scale-110 rotate-6" : "group-hover:scale-105"}
+                    ${isActive ? "scale-110 rotate-6" : ""}
                   `}
                 />
                 {tab.name}
@@ -144,7 +142,7 @@ export default function CommandPalette({ open, setOpen }: any) {
           })}
         </div>
 
-        {/* Search Bar */}
+        {/* Search */}
         <input
           autoFocus
           value={query}
@@ -157,13 +155,8 @@ export default function CommandPalette({ open, setOpen }: any) {
           "
         />
 
-        {/* Horizontal Command Row */}
-        <div
-          className="
-            mt-4 flex flex-wrap gap-3
-            items-center justify-start
-          "
-        >
+        {/* Commands */}
+        <div className="mt-4 flex flex-wrap gap-3 items-center justify-start">
           {filtered.length === 0 && (
             <p className="text-slate-400 text-sm px-2 py-3">No results</p>
           )}
@@ -188,18 +181,16 @@ export default function CommandPalette({ open, setOpen }: any) {
                   }
                 `}
               >
-                {/* Animated Icon */}
                 <Icon
                   size={18}
                   className={`
                     text-cyan-300 transition-transform duration-200
-                    ${isActive ? "scale-110 rotate-6" : "group-hover:scale-105"}
+                    ${isActive ? "scale-110 rotate-6" : ""}
                   `}
                 />
 
                 <span>{cmd.name}</span>
 
-                {/* Shortcut */}
                 <span
                   className="
                     ml-auto text-xs px-2 py-0.5 rounded

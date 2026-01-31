@@ -92,7 +92,7 @@ export default function WorkspacePanel() {
     };
   }, [recognition]);
 
-  // 🔥 AI Streaming Engine
+  // 🔥 FILE‑AWARE AI STREAMING ENGINE
   const runAI = async (mode: string) => {
     if (!currentTab?.content.trim()) return;
 
@@ -102,8 +102,14 @@ export default function WorkspacePanel() {
     try {
       const res = await fetch("/api/ai/stream", {
         method: "POST",
-        body: JSON.stringify({ input: currentTab.content, mode }),
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mode,
+          file: {
+            name: currentTab.name,
+            content: currentTab.content,
+          },
+        }),
       });
 
       if (!res.body) {
@@ -119,6 +125,7 @@ export default function WorkspacePanel() {
       while (!done) {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
+
         if (value) {
           const chunk = decoder.decode(value);
           setAiOutput((prev) => prev + chunk);
@@ -131,10 +138,8 @@ export default function WorkspacePanel() {
     }
   };
 
-  // ⚡ Execute button (same as Generate but uses "Execute" mode)
-  const executeAI = () => {
-    runAI("Execute");
-  };
+  // ⚡ Execute button
+  const executeAI = () => runAI("Execute");
 
   // ➕ Add new tab
   const addTab = () => {
@@ -283,6 +288,16 @@ export default function WorkspacePanel() {
         {/* RIGHT: AI OUTPUT */}
         <div className="flex flex-col h-full">
           <h2 className="text-xl font-semibold mb-3">AI Output</h2>
+
+          {/* APPLY FIX BUTTON */}
+          {aiOutput && !loading && (
+            <button
+              onClick={() => updateTabContent(aiOutput)}
+              className="mb-3 px-4 py-2 bg-green-700 hover:bg-green-600 text-white rounded-md transition"
+            >
+              Apply Fix to File
+            </button>
+          )}
 
           <div
             className="
