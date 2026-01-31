@@ -1,6 +1,9 @@
 import { productArchitectBrain } from "./productArchitectBrain";
 import { webBuilderBrain } from "./webBuilderBrain";
 import { mobileBuilderBrain } from "./mobileBuilderBrain";
+import { debuggingBrain } from "./debuggingBrain";
+import { seoBrain } from "./seoBrain";
+import { translationBrain } from "./translationBrain";
 
 const agentRoutingRules = [
   {
@@ -52,6 +55,49 @@ const agentRoutingRules = [
       "stack navigator",
       "tab navigator"
     ]
+  },
+  {
+    agent: "debugging",
+    match: [
+      "bug",
+      "error",
+      "fix this",
+      "debug",
+      "issue",
+      "stack trace",
+      "crash",
+      "not working",
+      "unexpected",
+      "undefined",
+      "cannot read",
+      "exception"
+    ]
+  },
+  {
+    agent: "seo",
+    match: [
+      "seo",
+      "optimize",
+      "keywords",
+      "meta description",
+      "ranking",
+      "search engine",
+      "rewrite for seo",
+      "content optimization"
+    ]
+  },
+  {
+    agent: "translation",
+    match: [
+      "translate",
+      "translation",
+      "convert to english",
+      "convert to hindi",
+      "convert to french",
+      "localize",
+      "rewrite in",
+      "change language"
+    ]
   }
 ];
 
@@ -75,6 +121,12 @@ export function getBrain(agent: string) {
       return webBuilderBrain;
     case "mobileBuilder":
       return mobileBuilderBrain;
+    case "debugging":
+      return debuggingBrain;
+    case "seo":
+      return seoBrain;
+    case "translation":
+      return translationBrain;
     default:
       return productArchitectBrain;
   }
