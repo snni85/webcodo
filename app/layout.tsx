@@ -1,21 +1,14 @@
+import Sidebar from "@/components/Sidebar";
 import "./globals.css";
-import { Inter } from "next/font/google";
-import { AppShell } from "@/components/layout/AppShell";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "WebCodo",
-  description: "AI-native developer workspace",
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <AppShell>
+      <body className="bg-black text-white flex min-h-screen">
+        <Sidebar />
+        <main className="flex-1 p-10 overflow-auto">
           {children}
-        </AppShell>
+        </main>
       </body>
     </html>
   );
