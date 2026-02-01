@@ -35,6 +35,9 @@ export default function WorkspacePanel() {
   const [listening, setListening] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
 
+  // ⭐ Command Palette
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+
   const currentTab = tabs.find((t) => t.id === activeTab);
 
   const updateTabContent = (value: string) => {
@@ -164,40 +167,57 @@ export default function WorkspacePanel() {
   return (
     <div className="h-full w-full flex flex-col">
 
-      {/* FILE TABS */}
-      <div className="flex items-center gap-2 border-b border-slate-800 pb-2 mb-4">
-        {tabs.map((tab) => (
-          <div
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`
-              px-4 py-2 rounded-md cursor-pointer flex items-center gap-2
-              ${
-                activeTab === tab.id
-                  ? "bg-slate-800 text-white"
-                  : "bg-slate-900 text-slate-400 hover:bg-slate-800"
-              }
-            `}
-          >
-            {tab.name}
-            <X
-              size={14}
-              onClick={(e) => {
-                e.stopPropagation();
-                closeTab(tab.id);
-              }}
-              className="hover:text-red-400"
-            />
-          </div>
-        ))}
+      {/* ⭐ FILE TABS + COMMAND PALETTE */}
+      <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-4">
 
-        {/* ADD TAB */}
+        {/* LEFT: Tabs + Add */}
+        <div className="flex items-center gap-2">
+          {tabs.map((tab) => (
+            <div
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`
+                px-4 py-2 rounded-md cursor-pointer flex items-center gap-2
+                ${
+                  activeTab === tab.id
+                    ? "bg-slate-800 text-white"
+                    : "bg-slate-900 text-slate-400 hover:bg-slate-800"
+                }
+              `}
+            >
+              {tab.name}
+              <X
+                size={14}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeTab(tab.id);
+                }}
+                className="hover:text-red-400"
+              />
+            </div>
+          ))}
+
+          {/* ADD TAB */}
+          <button
+            onClick={addTab}
+            className="p-2 rounded-md bg-slate-800 hover:bg-slate-700"
+          >
+            <Plus size={18} />
+          </button>
+        </div>
+
+        {/* RIGHT: Command Palette Button */}
         <button
-          onClick={addTab}
-          className="p-2 rounded-md bg-slate-800 hover:bg-slate-700"
+          onClick={() => setIsCommandPaletteOpen(true)}
+          className="
+            px-4 py-2 rounded-md bg-slate-800 hover:bg-slate-700 
+            text-slate-200 flex items-center gap-2
+          "
         >
-          <Plus size={18} />
+          <span className="font-mono text-sm">⌘K</span>
+          <span>Command</span>
         </button>
+
       </div>
 
       {/* MAIN GRID */}
@@ -315,6 +335,29 @@ export default function WorkspacePanel() {
           </div>
         </div>
       </div>
+
+      {/* ⭐ COMMAND PALETTE MODAL (if you want me to build it, say the word) */}
+      {isCommandPaletteOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+          <div className="bg-slate-900 border border-slate-700 p-6 rounded-xl w-96">
+            <h2 className="text-lg font-semibold mb-4 text-slate-200">
+              Command Palette
+            </h2>
+
+            <p className="text-slate-400 mb-4">
+              (Placeholder — I can build the full command system if you want)
+            </p>
+
+            <button
+              onClick={() => setIsCommandPaletteOpen(false)}
+              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-md text-slate-200"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
